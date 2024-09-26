@@ -1,9 +1,20 @@
+/* CSS Variables */
+:root {
+  --primary-bg: #eff6ff;
+  --secondary-bg: white;
+  --text-color: #202124;
+  --font-primary: 'Inter', sans-serif;
+  --font-secondary: 'Press Start 2P', system-ui;
+  --button-hover-opacity: 0.7;
+}
+
+/* Global Styles */
 * {
-  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  color: #202124;
+  font-family: var(--font-primary);
+  color: var(--text-color);
 }
 
 h1,
@@ -11,21 +22,17 @@ h2,
 h3,
 input,
 button {
-  font-family: 'Press Start 2P', system-ui;
+  font-family: var(--font-secondary);
 }
 
+/* Layout */
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 14px;
-  background: #eff6ff;
+  background: var(--primary-bg);
   gap: 14px;
-}
-
-header {
-  display: flex;
-  align-items: stretch;
 }
 
 header,
@@ -36,55 +43,47 @@ header,
   gap: 14px;
 }
 
+/* Form Input */
 header input {
   flex: 1;
   border-radius: 14px;
   outline: none;
   width: 100%;
+  padding: 14px 18px;
+  background: var(--secondary-bg);
+  border: none;
 }
 
+/* Button Styles */
 header button {
   border-radius: 14px;
   background: transparent;
   transition-duration: 200ms;
   cursor: pointer;
-}
-
-header button:hover {
-  opacity: 0.7;
-}
-
-header button,
-header input {
   padding: 14px 18px;
   border: none;
   outline: none;
-  background: white;
 }
 
-p {
-  font-size: 0.9em;
+header button:hover {
+  opacity: var(--button-hover-opacity);
 }
 
-.main {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
+/* Todo List Item */
 .todoItem {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 14px;
   border-radius: 14px;
-  background: white;
+  background: var(--secondary-bg);
 }
 
 .todoItem p {
   flex: 1;
 }
 
+/* Actions Container */
 .actionsContainer {
   display: flex;
   align-items: center;
@@ -99,19 +98,41 @@ p {
 }
 
 .actionsContainer button:hover {
-  opacity: 0.7;
+  opacity: var(--button-hover-opacity);
 }
 
+/* Priority Select */
+.prioritySelect {
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
 
-
+/* Responsive Design */
 @media (min-width: 640px) {
-
-  header button,
-  header input {
+  header input,
+  header button {
     font-size: 1.2em;
   }
 
   p {
     font-size: 1em;
+  }
+}
+
+/* Focus Styles for Accessibility */
+input:focus,
+button:focus {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-bg: #121212;
+    --secondary-bg: #333333;
+    --text-color: #ffffff;
   }
 }
