@@ -1,11 +1,21 @@
 /* CSS Variables */
 :root {
-  --primary-bg: #eff6ff;
+  --primary-bg: #f0f4ff;
   --secondary-bg: white;
   --text-color: #202124;
   --font-primary: 'Inter', sans-serif;
   --font-secondary: 'Press Start 2P', system-ui;
-  --button-hover-opacity: 0.7;
+  --button-hover-opacity: 0.8;
+  --primary-color: #3498db;
+  --secondary-color: #2c3e50;
+  --background-color: #ecf0f1;
+  --accent-color: #e74c3c;
+  --success-color: #2ecc71;
+  --warning-color: #f39c12;
+  --primary-bg-dark: #121212;
+  --secondary-bg-dark: #1e1e1e;
+  --text-color-dark: #ffffff;
+  --border-color-dark: #444;
 }
 
 /* Global Styles */
@@ -14,14 +24,11 @@
   margin: 0;
   padding: 0;
   font-family: var(--font-primary);
+  line-height: 1.6;
   color: var(--text-color);
 }
 
-h1,
-h2,
-h3,
-input,
-button {
+h1, h2, h3, input, button {
   font-family: var(--font-secondary);
 }
 
@@ -30,17 +37,20 @@ button {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 14px;
+  padding: 20px;
   background: var(--primary-bg);
-  gap: 14px;
+  gap: 20px;
 }
 
 header,
 .main {
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
   margin: 0 auto;
-  gap: 14px;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Form Input */
@@ -49,20 +59,37 @@ header input {
   border-radius: 14px;
   outline: none;
   width: 100%;
-  padding: 14px 18px;
+  padding: 14px 40px 14px 18px;
   background: var(--secondary-bg);
-  border: none;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
+/* Dark Mode Styles for Input */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-bg: var(--primary-bg-dark);
+    --secondary-bg: var(--secondary-bg-dark);
+    --text-color: var(--text-color-dark);
+    --border-color: var(--border-color-dark);
+  }
+  
+  header input {
+    border: 1px solid var(--border-color);
+    background: var(--secondary-bg);
+  }
 }
 
 /* Button Styles */
 header button {
   border-radius: 14px;
-  background: transparent;
-  transition-duration: 200ms;
+  background: var(--primary-color);
+  color: white;
+  transition: opacity 200ms;
   cursor: pointer;
   padding: 14px 18px;
   border: none;
-  outline: none;
+  margin-top: 10px;
 }
 
 header button:hover {
@@ -74,13 +101,18 @@ header button:hover {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 14px;
-  border-radius: 14px;
+  padding: 16px;
+  border-radius: 12px;
   background: var(--secondary-bg);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.todoItem p {
-  flex: 1;
+/* Dark Mode Styles for Todo Item */
+@media (prefers-color-scheme: dark) {
+  .todoItem {
+    background: var(--secondary-bg);
+    box-shadow: none;
+  }
 }
 
 /* Actions Container */
@@ -91,7 +123,7 @@ header button:hover {
 }
 
 .actionsContainer button {
-  transition-duration: 200ms;
+  transition: opacity 200ms;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -109,16 +141,67 @@ header button:hover {
   border: 1px solid #ccc;
 }
 
+/* Dark Mode Styles for Priority Select */
+@media (prefers-color-scheme: dark) {
+  .prioritySelect {
+    border: 1px solid var(--border-color);
+    background: var(--secondary-bg);
+    color: var(--text-color);
+  }
+}
+
 /* Responsive Design */
 @media (min-width: 640px) {
   header input,
   header button {
     font-size: 1.2em;
   }
-
   p {
     font-size: 1em;
   }
+}
+
+@media (min-width: 768px) {
+  #root {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 400px) {
+  header {
+    flex-direction: column;
+  }
+  header input,
+  header button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* Typography improvements */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Alignment improvements */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 1rem;
 }
 
 /* Focus Styles for Accessibility */
@@ -128,11 +211,108 @@ button:focus {
   outline-offset: 2px;
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-bg: #121212;
-    --secondary-bg: #333333;
-    --text-color: #ffffff;
+/* Responsive typography */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
   }
+  h2 {
+    font-size: 1.75rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Consistent styling */
+.button-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.button-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+/* Todo Item Styles */
+.todo-item {
+  background-color: white;
+  border-left: 5px solid var(--primary-color);
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item.completed {
+  border-left-color: var(--success-color);
+}
+
+.todo-item.high-priority {
+  border-left-color: var(--accent-color);
+}
+
+/* Accessibility enhancements */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Responsive layouts using Flexbox */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.item {
+  flex: 1 1 calc(50% - 10px);
+  max-width: calc(50% - 10px);
+}
+
+/* Mobile-first approach */
+@media (min-width: 768px) {
+  .item {
+    flex: 1 1 calc(33.33% - 10px);
+    max-width: calc(33.33% - 10px);
+  }
+}
+
+/* Progressive enhancement */
+.no-js {
+  display: none !important;
+}
+
+.js-enabled {
+  display: block !important;
+}
+
+/* CSS animations (sparingly used) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 300ms ease-out;
 }

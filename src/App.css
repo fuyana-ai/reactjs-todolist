@@ -25,15 +25,19 @@ button {
 
 header {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 header,
 .main {
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 20px;
 }
 
 header input {
@@ -44,10 +48,10 @@ header input {
 }
 
 header button {
-  border-radius: 14px;
-  background: transparent;
-  transition-duration: 200ms;
-  cursor: pointer;
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 header button:hover {
@@ -75,14 +79,29 @@ p {
 .todoItem {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   padding: 14px;
-  border-radius: 14px;
-  background: white;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #ccc;
 }
+
 
 .todoItem p {
   flex: 1;
+}
+
+
+.todo-content-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.todo-text {
+  font-size: 18px;
+  margin-left: 10px;
 }
 
 .actionsContainer {
@@ -103,15 +122,34 @@ p {
 }
 
 
-
-@media (min-width: 640px) {
-
+select, button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+/* Adjust spacing for priority and due date */
+.priority,
+.due-date {
+  margin-left: 8px;
+  font-size: 0.875rem;
+  color: #666;
+}
+@media (min-width: 768px) {
   header button,
   header input {
-    font-size: 1.2em;
+    font-size: 1rem;
   }
+
+  p {
+    font-size: 0.875rem;
+  }
+
+  /* Increase gap between todo items */
+  .todoItem {
+    gap: 24px;
+  }
+}
 
   p {
     font-size: 1em;
   }
-}

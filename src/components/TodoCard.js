@@ -41,70 +41,91 @@
 //         </li>
 //     )
 // }
-
-
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function TodoCard(props) {
     const {
         todo,
-        index,
-        handlePriorityChange,
-        handleEditTodo,
-        handleDeleteTodo,
-        handleToggleComplete
+        onEdit,
+        onDelete,
+        onToggleComplete,
+        onPriorityChange,
+        onDueDateChange
     } = props;
 
     const [isEditing, setIsEditing] = useState(false);
-    const [editText, setEditText] = useState(todo.text);
+    const [editedText, setEditedText] = useState(todo.text);
 
     const handleSaveEdit = () => {
-        if (editText.trim()) { // Ensure not saving empty text
-            handleEditTodo(index, editText); // Call to update the todo
-            setIsEditing(false); // Exit edit mode
+        if (editedText.trim()) {
+            onEdit(todo.id, editedText);
+            setIsEditing(false);
         } else {
-            alert('Todo cannot be empty!'); // Alert for empty text
+            alert('Todo cannot be empty!');
         }
     };
 
+    const handleCancelEdit = () => {
+        setEditedText(todo.text);
+        setIsEditing(false);
+    };
+
     return (
-        <li className='todoItem'>
-            <div className="todoContent">
-                {isEditing ? (
-                    <input
-                        type="text"
-                        value={editText}
-                        onChange={(e) => setEditText(e.target.value)}
-                    />
-                ) : (
-                    <p>{todo.text}</p>
-                )}
+        <li className={`todo-item ${todo.completed ? 'completed' : ''} ${todo.priority === 'high' ? 'high-priority' : ''}`}>
+            <div className='todo-content'>
                 <input
                     type="checkbox"
                     checked={todo.completed}
-                    onChange={() => handleToggleComplete(index)}
+                    onChange={() => onToggleComplete(todo.id)}
                 />
-            </div>
-            <div className='actionsContainer'>
-                <select onChange={(e) => handlePriorityChange(index, e.target.value)}>
-                    <option value='low'>Low</option>
-                    <option value='medium'>Medium</option>
-                    <option value='high'>High</option>
-                </select>
-                
                 {isEditing ? (
-                    <button onClick={handleSaveEdit}>
-                        Save
-                    </button>
+                    <input
+                        type="text"
+                        value={editedText}
+                        onChange={(e) => setEditedText(e.target.value)}
+                        onBlur={handleSaveEdit}
+                        autoFocus
+                    />
                 ) : (
-                    <button onClick={() => setIsEditing(true)}>
-                        <i className="fa-solid fa-pen-to-square"></i>
-                    </button>
+                    <span onClick={() => setIsEditing(true)}>{todo.text}</span>
                 )}
-
-                <button onClick={() => handleDeleteTodo(index)}>
-                    <i className="fa-regular fa-trash-can"></i>
-                </button>
+            </div>
+            <select
+                value={todo.priority}
+                onChange={(e) => onPriorityChange(todo.id, e.target.value)}
+            >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <DatePicker
+                selected={todo.dueDate}
+                onChange={(date) => onDueDateChange(todo.id, date)}
+                placeholderText="Set due date"
+            />
+            <div className='action-buttons'>
+                {!isEditing && (
+                    <>
+                        <button onClick={() => setIsEditing(true)}>
+                            <i className="fa-solid fa-pen-to-square"></i> {/* Edit icon */}
+                        </button>
+                        <button onClick={() => onDelete(todo.id)}>
+                            <i className="fa-regular fa-trash-can"></i> {/* Delete icon */}
+                        </button>
+                    </>
+                )}
+                {isEditing && (
+                    <>
+                        <button onClick={handleSaveEdit}>
+                            <i className="fa-regular fa-floppy-disk"></i> {/* Save icon */}
+                        </button>
+                        <button onClick={handleCancelEdit}>
+                            <i className="fa-solid fa-xmark"></i> {/* Cancel icon */}
+                        </button>
+                    </>
+                )}
             </div>
         </li>
     );
