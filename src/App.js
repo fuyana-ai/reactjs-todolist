@@ -1,5 +1,6 @@
 import "@popperjs/core";
 import "bootstrap/dist/css/bootstrap.min.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import React, { useState, useEffect } from 'react';
 import TodoInput from './components/TodoInput';
 import TodoList from './components/TodoList';
@@ -31,14 +32,12 @@ function App() {
         );
         persistData(newTodoList);
         setTodos(newTodoList);
-        setTodoToEdit(null); // Clear edit state after saving
     };
 
     const handleDeleteTodo = (id) => {
         const newTodoList = todos.filter(todo => todo.id !== id);
         persistData(newTodoList);
         setTodos(newTodoList);
-        setTodoToEdit(null); // Clear edit state if deleted
     };
 
     const handleToggleComplete = (id) => {

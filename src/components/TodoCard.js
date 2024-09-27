@@ -60,16 +60,16 @@ export default function TodoCard(props) {
 
     const handleSaveEdit = () => {
         if (editedText.trim()) {
-            onEdit(todo.id, editedText);
-            setIsEditing(false);
+            onEdit(todo.id, editedText); // Save edited task
+            setIsEditing(false); // Exit editing mode
         } else {
             alert('Todo cannot be empty!');
         }
     };
 
     const handleCancelEdit = () => {
-        setEditedText(todo.text);
-        setIsEditing(false);
+        setEditedText(todo.text); // Reset text to original if canceled
+        setIsEditing(false); // Exit editing mode
     };
 
     return (
@@ -81,52 +81,50 @@ export default function TodoCard(props) {
                     onChange={() => onToggleComplete(todo.id)}
                 />
                 {isEditing ? (
-                    <input
-                        type="text"
-                        value={editedText}
-                        onChange={(e) => setEditedText(e.target.value)}
-                        onBlur={handleSaveEdit}
-                        autoFocus
-                    />
-                ) : (
-                    <span onClick={() => setIsEditing(true)}>{todo.text}</span>
-                )}
-            </div>
-            <select
-                value={todo.priority}
-                onChange={(e) => onPriorityChange(todo.id, e.target.value)}
-            >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
-            <DatePicker
-                selected={todo.dueDate}
-                onChange={(date) => onDueDateChange(todo.id, date)}
-                placeholderText="Set due date"
-            />
-            <div className='action-buttons'>
-                {!isEditing && (
-                    <>
-                        <button onClick={() => setIsEditing(true)}>
-                            <i className="fa-solid fa-pen-to-square"></i> {/* Edit icon */}
-                        </button>
-                        <button onClick={() => onDelete(todo.id)}>
-                            <i className="fa-regular fa-trash-can"></i> {/* Delete icon */}
-                        </button>
-                    </>
-                )}
-                {isEditing && (
-                    <>
+                    <div className="edit-mode">
+                        <input
+                            type="text"
+                            value={editedText}
+                            onChange={(e) => setEditedText(e.target.value)}
+                            autoFocus
+                        />
                         <button onClick={handleSaveEdit}>
                             <i className="fa-regular fa-floppy-disk"></i> {/* Save icon */}
                         </button>
                         <button onClick={handleCancelEdit}>
                             <i className="fa-solid fa-xmark"></i> {/* Cancel icon */}
                         </button>
-                    </>
+                    </div>
+                ) : (
+                    <span onClick={() => setIsEditing(true)}>{todo.text}</span>
                 )}
             </div>
+
+            {!isEditing && (
+                <>
+                    <select
+                        value={todo.priority}
+                        onChange={(e) => onPriorityChange(todo.id, e.target.value)}
+                    >
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    <DatePicker
+                        selected={todo.dueDate}
+                        onChange={(date) => onDueDateChange(todo.id, date)}
+                        placeholderText="Set due date"
+                    />
+                    <div className='action-buttons'>
+                        <button onClick={() => setIsEditing(true)}>
+                            <i className="fa-solid fa-pen-to-square"></i> {/* Edit icon */}
+                        </button>
+                        <button onClick={() => onDelete(todo.id)}>
+                            <i className="fa-regular fa-trash-can"></i> {/* Delete icon */}
+                        </button>
+                    </div>
+                </>
+            )}
         </li>
     );
 }
